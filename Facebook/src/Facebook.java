@@ -9,11 +9,113 @@ import java.net.URL;
 public class Facebook
 {
 	private final static String USER_AGENT = "Mozilla/5.0";
-	private final static String GRAPH_API = "https://graph.facebook.com/";
+	private final static String GRAPH_API = "https://graph.facebook.com/v2.1/";
+	
+	private String getById(final String id, final String accessToken)
+	{
+		final String url = GRAPH_API + id + "?" + accessToken;
+		
+		StringBuffer response = new StringBuffer();
+		sendGet(url, response);
+		
+		return response.toString(); 
+	}
+	
+	public String pages(final String page, final String accessToken)
+	{
+		final String url = GRAPH_API + "search?q=" + page.replace(" ", "+") + "&type=page&" + accessToken;
+		
+		StringBuffer response = new StringBuffer();
+		sendGet(url, response);
+		
+		return response.toString(); 
+	}
+	
+	public String pageDescription(final String id, final String accessToken)
+	{
+		return getById(id, accessToken);
+	}
+	
+	public String users(final String user, final String accessToken)
+	{
+		final String url = GRAPH_API + "search?q=" + user.replace(" ", "+") + "&type=user&" + accessToken;
+		
+		StringBuffer response = new StringBuffer();
+		sendGet(url, response);
+		
+		return response.toString(); 
+	}
+	
+	public String groups(final String group, final String accessToken)
+	{
+		final String url = GRAPH_API + "search?q=" + group.replace(" ", "+") + "&type=group&" + accessToken;
+		
+		StringBuffer response = new StringBuffer();
+		sendGet(url, response);
+		
+		return response.toString(); 
+	}
+	
+	public String groupDescription(final String id, final String accessToken)
+	{
+		return getById(id, accessToken);
+	}
+	
+	public String events(final String event, final String accessToken)
+	{
+		final String url = GRAPH_API + "search?q=" + event.replace(" ", "+") + "&type=event&" + accessToken;
+		
+		StringBuffer response = new StringBuffer();
+		sendGet(url, response);
+		
+		return response.toString(); 
+	}
+	
+	public String events(final String event, final String since, final String accessToken)
+	{
+		final String url = GRAPH_API + "search?q=" + event.replace(" ", "+") + "&since=" + since + 
+				"&type=event&" + accessToken;
+		
+		StringBuffer response = new StringBuffer();
+		sendGet(url, response);
+		
+		return response.toString(); 
+	}
+	
+	public String events(final String event, final String since, final String until, final String accessToken)
+	{
+		final String url = GRAPH_API + "search?q=" + event.replace(" ", "+") + "&since=" + since + 
+				"&until=" + until + "&type=event&" + accessToken;
+		
+		StringBuffer response = new StringBuffer();
+		sendGet(url, response);
+		
+		return response.toString(); 
+	}
 	
 	public String posts(final String user, final String accessToken)
 	{
 		final String url = GRAPH_API + user + "/posts?" + accessToken;
+		
+		StringBuffer response = new StringBuffer();
+		sendGet(url, response);
+		
+		return response.toString();
+	}
+	
+	public String posts(final String user, final String since, final String accessToken)
+	{
+		final String url = GRAPH_API + user + "/posts?" + "since=" + since + "&" + accessToken;
+		
+		StringBuffer response = new StringBuffer();
+		sendGet(url, response);
+		
+		return response.toString();
+	}
+	
+	public String posts(final String user, final String since, final String until, final String accessToken)
+	{
+		final String url = GRAPH_API + user + "/posts?" + "since=" + since + "&until=" + until + "&" + accessToken;
 		
 		StringBuffer response = new StringBuffer();
 		sendGet(url, response);
@@ -32,7 +134,17 @@ public class Facebook
 		StringBuffer response = new StringBuffer();
 		sendGet(url, response);
 		
-		return response.toString();
+		// Get the test users from app		
+		url = GRAPH_API + id + "/accounts/test-users?" + response.toString();
+		
+		response = new StringBuffer();
+		sendGet(url, response);
+		
+		// Get the access_token of the first user (Use JSON parser in smalltalk for this)
+		String accessToken = response.toString();
+		accessToken = accessToken.substring(accessToken.indexOf("access_token") + 15);
+		
+		return "access_token=" + accessToken.substring(0, accessToken.indexOf("\"")); 
 	}
 	
 	private int sendGet(final String url, StringBuffer response)
