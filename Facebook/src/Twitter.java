@@ -13,15 +13,77 @@ public class Twitter
 	private final static String USER_AGENT = "teste_app_poo";
 	private final static String API = "https://api.twitter.com/";
 	
-	public String posts(final String user, final String accessToken)
+	public String posts(final String user, final int count, final String accessToken)
 	{
 		String url = API + "1.1/statuses/user_timeline.json?";
-		url += "screen_name=" + user;
+		try
+		{
+			url += "screen_name=" + URLEncoder.encode(user, "UTF-8") + "&count=" + count;
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			e.printStackTrace();
+		}
 		
 		StringBuffer response = new StringBuffer();
 		sendGet(url, accessToken, response);
 		
 		return response.toString();
+	}
+	
+	public String posts(final String user, final String accessToken)
+	{
+		return posts(user, 20, accessToken);
+	}
+	
+	public String tweets(final String hashtag, final int count, final String accessToken)
+	{
+		String url = API + "1.1/search/tweets.json?";
+		try
+		{
+			url += "q=" + URLEncoder.encode(hashtag, "UTF-8") + "&count=" + count;
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			e.printStackTrace();
+		}
+		
+		System.out.println(url);
+		
+		StringBuffer response = new StringBuffer();
+		sendGet(url, accessToken, response);
+		
+		return response.toString();
+	}
+	
+	public String tweets(final String hashtag, final String accessToken)
+	{
+		return tweets(hashtag, 20, accessToken);
+	}
+	
+	public String tweetsFrom(final String hashtag, final String user, final int count, final String accessToken)
+	{
+		String url = API + "1.1/search/tweets.json?";
+		try
+		{
+			url += "q=from" + URLEncoder.encode(user + " " + hashtag, "UTF-8") + "&count=" + count;
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			e.printStackTrace();
+		}
+		
+		System.out.println(url);
+		
+		StringBuffer response = new StringBuffer();
+		sendGet(url, accessToken, response);
+		
+		return response.toString();
+	}
+	
+	public String tweetsFrom(final String hashtag, final String user, final String accessToken)
+	{
+		return tweetsFrom(hashtag, user, 20, accessToken);
 	}
 	
 	public String accessToken(final String id, final String secret)
@@ -40,6 +102,8 @@ public class Twitter
 			connection.setRequestProperty("User-Agent", USER_AGENT);
 			connection.setRequestProperty("Authorization",
 										  "Basic " + encode(id, secret));
+			
+			System.out.println(id + "\n" + secret + "\n" + encode(id, secret));
 						
 			final int responseCode = connection.getResponseCode();
 			System.out.println("Sending 'GET' request to URL: " + url);

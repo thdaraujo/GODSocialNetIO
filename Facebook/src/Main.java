@@ -4,16 +4,16 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		// Facebook id e senha da app cadastrada
-		final String facebookId = "743980072335668";
-		final String facebookSecret = "0d3878c173d1f15ad5d158c0ef545107";
-		
-		Facebook facebook = new Facebook();
-		
-		// Pega o token necessário para efetuar qualquer consulta ao servidor
-		final String accessTokenFacebook = 
-			facebook.accessToken(facebookId, facebookSecret);
-		System.out.println("Access Token: " + accessTokenFacebook);
+//		// Facebook id e senha da app cadastrada
+//		final String facebookId = "743980072335668";
+//		final String facebookSecret = "0d3878c173d1f15ad5d158c0ef545107";
+//		
+//		Facebook facebook = new Facebook();
+//		
+//		// Pega o token necessário para efetuar qualquer consulta ao servidor
+//		final String accessTokenFacebook = 
+//			facebook.accessToken(facebookId, facebookSecret);
+//		System.out.println("Access Token: " + accessTokenFacebook);
 	
 //		// Pega os posts do usuário nike
 //		final String postsFacebook = facebook.posts("nike", accessTokenFacebook);
@@ -80,9 +80,29 @@ public class Main
 //		accessTokenTwitter =
 //			accessTokenTwitter.substring(accessTokenTwitter.lastIndexOf('"') + 1);
 //		System.out.println(accessTokenTwitter);
-//		
+		
 //		// Pega os posts do usuário usponline
-//		final String postsTwitter = twitter.posts("usponline", accessTokenTwitter);
+//		final String postsTwitter = twitter.posts("@usponline", accessTokenTwitter);
+//		System.out.println(postsTwitter);
+		
+//		// Pega os 100 posts do usuário usponline
+//		final String postsTwitter = twitter.posts("@usponline", 100, accessTokenTwitter);
+//		System.out.println(postsTwitter);
+		
+//		// Pega os tweets com hashtag #usp
+//		final String postsTwitter = twitter.tweets("#usp", accessTokenTwitter);
+//		System.out.println(postsTwitter);
+//		
+//		// Pega os 100 tweets com hashtag #usp
+//		final String postsTwitter = twitter.tweets("#usp", 100, accessTokenTwitter);
+//		System.out.println(postsTwitter);
+		
+//		// Pega os tweets do usuário @NASA com a hashtag #nasa
+//		final String postsTwitter = twitter.tweetsFrom("#nasa", "@NASA", accessTokenTwitter);
+//		System.out.println(postsTwitter);
+	
+//		// Pega os 100 tweets do usuário @NASA com a hashtag #nasa
+//		final String postsTwitter = twitter.tweetsFrom("#nasa", "@NASA", 100, accessTokenTwitter);
 //		System.out.println(postsTwitter);
 	}
 }
